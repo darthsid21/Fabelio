@@ -120,6 +120,6 @@ app.get("/",function(req,res){                       //rendering
 
 
 
-var listener =  app.listen(3000,function(){
-    console.log("Listening at port 3000")
+var listener =  app.listen(process.env.PORT,function(){
+    console.log("Listening at port "+listener.address().port)
 })
