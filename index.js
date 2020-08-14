@@ -6,7 +6,6 @@ var similarity = require('compute-cosine-similarity')
 var string_similarity = require('string-cosine-similarity')
 app.set('view engine','pug')
 var results = []
-var sum = 0
 var sum1 = 0
 var sd = 0
 var i = 0
@@ -17,12 +16,6 @@ fs.createReadStream('data.csv')                            //csv parser
     .on('end', () => {
         //console.log(results)
         
-        for(x of results){
-            
-          sum += Number(x.price)
-        //  console.log(sum)
-        }
-        var mean = sum/results.length
         for(x of results){
             sum1+=(Number(x.price)-Number(results[0].price))**2
         }
