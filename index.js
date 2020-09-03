@@ -9,19 +9,20 @@ var results = []
 var sum1 = 0
 var sd = 0
 var i = 0
+//var len1 = 0
 var sorted_array = []
 fs.createReadStream('data.csv')                            //csv parser
     .pipe(csv())
     .on('data',(data) => results.push(data))
     .on('end', () => {
         //console.log(results)
-        
-        for(x of results){
+        //replaced for loop with forEach()
+        results.forEach(x=>{
             sum1+=(Number(x.price)-Number(results[0].price))**2
-        }
+        })
         sd = (sum1/results.length)**0.5 //deviation wrt sofa 2 price 
 
-
+       
         for(i=0;i<results.length;i++){
             results[i].score=item_similarity(results[0],results[i])
         }
@@ -66,10 +67,19 @@ function material_similarity(mat1,mat2){
     return string_similarity(mat1,mat2)
 
 }
+/*
+Weights:
+Price similarity: 1
+Color similarity: 1
+Material similarity: 0.75
+Dimension similarity: 0.5
+Name similarity: 0.5
+
+*/
 
 function item_similarity(item1,item2){
     console.log(material_similarity(item1.material,item2.material))
-    return name_similarity(item1.product_name,item2.product_name) + dimension_similarity(item1.dimension,item2.dimension) + color_similarity(item1.colours,item2.colours) + price_similarity(item1.price,item2.price) + material_similarity(item1.material,item2.material)
+    return name_similarity(item1.product_name,item2.product_name)*0.5 + dimension_similarity(item1.dimension,item2.dimension)*0.5 + color_similarity(item1.colours,item2.colours) + price_similarity(item1.price,item2.price) + material_similarity(item1.material,item2.material)*0.75
 }
 
 function bubble_Sort(a)
