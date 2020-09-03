@@ -26,9 +26,9 @@ fs.createReadStream('data.csv')                            //csv parser
         for(i=0;i<results.length;i++){
             results[i].score=item_similarity(results[0],results[i])
         }
-        for(x of results){
+        results.forEach(x=>{
             console.log(x.score)
-        }
+        })
         sorted_array = bubble_Sort(results)
         console.log(sorted_array)
         }
